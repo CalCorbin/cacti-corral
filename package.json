@@ -1,0 +1,27 @@
+{
+  "name": "cacti-corral",
+  "version": "1.0.0",
+  "description": "A fun cactus simulation game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CalCorbin/cacti-corral.git"
+  },
+  "author": "Cal Corbin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CalCorbin/cacti-corral/issues"
+  },
+  "homepage": "https://github.com/CalCorbin/cacti-corral#readme",
+  "dependencies": {
+    "enquirer": "^2.3.6"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "eslint": "^7.26.0",
+    "mocha": "^8.4.0"
+  }
+}
