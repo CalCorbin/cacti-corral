@@ -1,2 +1,2 @@
-// const { prompt, Select } = require('enquirer');
-// const Cactus = require('../db/Cactus');
+const { prompt, Select } = require('enquirer');
+const Cactus = require('../db/Cactus');
