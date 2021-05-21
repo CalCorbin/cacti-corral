@@ -9,10 +9,9 @@
 1. The player has two actions to use each week.
     1. Action options:
         1. Water the cactus.
-        1. Fertilize the cactus.
-        1. Skip an action all together.
-1. At the end of week 7, will your cactus be lush and beautiful? Or will it be pale and spikey?
-    
+        1. Fertilize the cactus with a pill.
+        1. Turn on sun lamp.
+1. At the end of week 7, will your cactus be lush and 10 inches tall? Or will it be short and spikey?  
     
 ## Installation
 1. Run `npm install`
