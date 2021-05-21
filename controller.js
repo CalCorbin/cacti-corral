@@ -11,11 +11,13 @@ async function gameIntro(cactus) {
 
 async function startRound(cactus) {
   if (cactus.weeksOld > 7) {
+    // We want to end the game if cactus is older than 7 weeks.
     return;
   }
 
   console.log(cactus);
 }
+
 async function runGame(cactus) {
   await gameIntro(cactus);
 
