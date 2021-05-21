@@ -10,15 +10,15 @@ async function gameIntro(cactus) {
 }
 
 async function pourWater(cactus) {
-  console.log('watering cactus');
+  console.log('watering cactus', cactus);
 }
 
 async function turnOnSunLamp(cactus) {
-  console.log('turning on the sun lamp');
+  console.log('turning on the sun lamp', cactus);
 }
 
 async function addFertilizer(cactus) {
-  console.log('fertilizing the cactus');
+  console.log('fertilizing the cactus', cactus);
 }
 
 async function startRound(cactus) {
@@ -62,6 +62,13 @@ async function startRound(cactus) {
         addFertilizer(cactus);
       }
     });
+
+  if (actionsUsed < 2) {
+    startRound(cactus);
+  } else {
+    console.log('game over');
+    process.exit();
+  }
 }
 
 async function runGame(cactus) {
