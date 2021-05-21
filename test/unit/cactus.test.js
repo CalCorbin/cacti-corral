@@ -1,11 +1,10 @@
 const { expect } = require('chai');
+const Cactus = require('../../Cactus');
 
 describe('Test suite for the cactus', () => {
-  it('Should confirm that the cactus has properties', () => {
-    const placeholder = {
-      text: 'lorem ipsum',
-    };
+  it('Should verify cactus is zero weeks old', () => {
+    const cactus = new Cactus();
 
-    expect(placeholder.text).to.equal('lorem ipsum');
+    expect(cactus.weeksOld).to.equal(0);
   });
 });

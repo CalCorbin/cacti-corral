@@ -1,6 +1,6 @@
 class Cactus {
   constructor() {
-    this.daysOld = 0;
+    this.weeksOld = 0;
   }
 }
 
