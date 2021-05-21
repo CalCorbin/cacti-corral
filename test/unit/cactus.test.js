@@ -12,7 +12,7 @@ describe('Test suite for the cactus', () => {
   it('Should verify cactus height is one inch', () => {
     expect(cactus.height).to.equal(1);
   });
-  it('Should verify cactus is flowering', () => {
+  it('Should verify cactus is not flowering', () => {
     expect(cactus.flowering).to.equal(false);
   });
   it('Should verify cactus has had zero weeks of sunlight', () => {
