@@ -4,7 +4,7 @@
   "description": "A fun cactus simulation game",
   "main": "index.js",
   "scripts": {
-    "lint:js": "./node_modules/.bin/eslint test/ bin/ db/ lib/",
+    "lint:js": "./node_modules/.bin/eslint test/ *.js",
     "test": "mocha test/**/*.test.js"
   },
   "repository": {
