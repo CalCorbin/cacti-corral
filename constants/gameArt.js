@@ -88,6 +88,20 @@ const sentientCactus = `
             |;   ;  |
             \`"-----"\`
 `;
+
+const spikyCactus = `
+   _x_x__x_____x   
+  x  / x | x x  \\ 
+ x  x x| x |x x  x 
+ |  | |x | || |  | 
+ |  x || x x| |  x 
+__\\__x_x_|_x_x__/__
+\\                 /
+ \`---------------'
+  |              |
+  \\_____________/ 
+`;
+
 const cactusAngel = `
 ____ <==> ____
 \\___\\(**)/___/
@@ -118,5 +132,13 @@ const endGameBorder = `
 `;
 
 module.exports = {
-  welcomeCactus, floweringCactus, cactusAngel, sunset, endGameBorder, normalCactus, endRoundBorder, sentientCactus,
+  welcomeCactus,
+  floweringCactus,
+  cactusAngel,
+  sunset,
+  endGameBorder,
+  normalCactus,
+  endRoundBorder,
+  sentientCactus,
+  spikyCactus,
 };

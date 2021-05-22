@@ -27,7 +27,7 @@ function pourWater(cactus) {
 function turnOnSunLamp(cactus) {
   cactus.timeInSun += 1;
   cactus.height += 0.3;
-  logGameMessage('\nThe cactus warms up in the sun.');
+  logGameMessage('\nThe cactus warms up in the sun lamp.');
 }
 
 function addFertilizer(cactus) {
@@ -57,8 +57,21 @@ function createSentientCactus(cactus) {
   }
 }
 
+function createSpikyCactus(cactus) {
+  if (cactus.timeInSun === 5 && cactus.amountWatered === 1) {
+    cactus.spiky = true;
+
+    logGameMessage(`You sure did give your cactus a lot of sun. It is ${cactus.height} inches tall and 
+    look at all those sharp spikes!`);
+    logGameMessage(art.spikyCactus);
+  }
+}
+
 function createNormalCactus(cactus) {
-  if (cactus.amountWatered > 1 && !cactus.flowering && !cactus.sentient) {
+  if (cactus.amountWatered > 1
+  && !cactus.flowering
+  && !cactus.sentient
+  && !cactus.spiky) {
     logGameMessage(`Your cactus is ${cactus.height} inches tall.`);
     logGameMessage(art.normalCactus);
   }
@@ -82,6 +95,8 @@ function calculateCactusResults(cactus) {
   createFloweringCactus(cactus);
 
   createSentientCactus(cactus);
+
+  createSpikyCactus(cactus);
 
   createNormalCactus(cactus);
 
@@ -157,5 +172,6 @@ module.exports = {
   createFloweringCactus,
   createNormalCactus,
   createSentientCactus,
+  createSpikyCactus,
   createDeadCactus,
 };

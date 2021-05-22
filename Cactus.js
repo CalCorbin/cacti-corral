@@ -8,6 +8,7 @@ class Cactus {
     this.amountFertilized = 0;
     this.dead = false;
     this.sentient = false;
+    this.spiky = false;
   }
 }
 

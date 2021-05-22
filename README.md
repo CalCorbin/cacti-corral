@@ -11,7 +11,7 @@
         1. Water the cactus.
         1. Fertilize the cactus with a pill.
         1. Turn on sun lamp.
-1. At the end of week 3, will your cactus be happy and 10 inches tall? Or will it be short and spikey?  
+1. At the end of week 3, will your cactus be happy and flowering? Or will it be short and spikey?  
     
 ## Installation
 1. Run `npm install`
