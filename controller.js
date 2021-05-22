@@ -9,16 +9,16 @@ async function gameIntro(cactus) {
   console.log(introMessage);
 }
 
-async function pourWater(cactus) {
-  console.log('watering cactus', cactus);
+function pourWater(cactus) {
+  cactus.amountWatered += 1;
 }
 
 async function turnOnSunLamp(cactus) {
-  console.log('turning on the sun lamp', cactus);
+  cactus.timeInSun += 1;
 }
 
 async function addFertilizer(cactus) {
-  console.log('fertilizing the cactus', cactus);
+  cactus.amountFertilized += 1;
 }
 
 async function startRound(cactus) {
@@ -77,4 +77,6 @@ async function runGame(cactus) {
   await startRound(cactus);
 }
 
-module.exports = { runGame };
+module.exports = {
+  runGame, pourWater, turnOnSunLamp, addFertilizer,
+};
