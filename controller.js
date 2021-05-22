@@ -68,7 +68,7 @@ function createSpikyCactus(cactus) {
 }
 
 function createNormalCactus(cactus) {
-  if (cactus.amountWatered > 1
+  if (cactus.amountWatered >= 1
   && !cactus.flowering
   && !cactus.sentient
   && !cactus.spiky) {
