@@ -9,6 +9,23 @@ const coolCactiArt = `
     |  |
 `;
 
+const floweringCactus = `
+          vVVVv
+          (___)
+           *-*,
+       ,*\\/|\`| \\
+       \\'  | |'| *,
+        \\ \`| | |/ )
+         | |'| , /
+         |'| |, /
+       __|_|_|_|__
+      [___________]
+       |         |
+       |         |
+       |         |
+       |_________|
+`;
+
 const introMessage = `
   Welcome to the Cacti Corral!!!
   You will have 7 turns, each turn representing a week, to raise your cactus.
@@ -22,4 +39,6 @@ const availableActions = [
   'Feed it a fertilizer pill',
 ];
 
-module.exports = { coolCactiArt, introMessage, availableActions };
+module.exports = {
+  coolCactiArt, introMessage, availableActions, floweringCactus,
+};

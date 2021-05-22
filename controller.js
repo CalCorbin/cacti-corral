@@ -1,5 +1,5 @@
 const { Select } = require('enquirer');
-const { coolCactiArt, introMessage, availableActions } = require('./constants');
+const gameText = require('./constants');
 
 function logGameMessage(string) {
   // This keeps log clutter out of mocha tests
@@ -12,12 +12,13 @@ async function gameIntro(cactus) {
   if (cactus.weeksOld > 0) {
     return;
   }
-  logGameMessage(coolCactiArt);
-  logGameMessage(introMessage);
+  logGameMessage(gameText.coolCactiArt);
+  logGameMessage(gameText.introMessage);
 }
 
 function pourWater(cactus) {
   cactus.amountWatered += 1;
+  cactus.height += 0.5;
   logGameMessage('\nThe cactus was watered.');
 }
 
@@ -31,13 +32,27 @@ function addFertilizer(cactus) {
   logGameMessage('\nThe cactus accepts the fertilizer.');
 }
 
+function calculateCactusResults(cactus) {
+  console.log(cactus);
+  if (cactus.amountWatered >= 8 && cactus.amountFertilized >= 6) {
+    cactus.flowering = true;
+    logGameMessage(`Congratulations, you have a flowering cactus that is 
+    ${cactus.height} inches tall!`);
+    logGameMessage(gameText.floweringCactus);
+  }
+
+  if (cactus.amountWatered < 3) {
+    cactus.dead = true;
+  }
+}
+
 async function startRound(cactus) {
-  logGameMessage(`\nStarting round ${cactus.weeksOld + 1}`);
+  logGameMessage(`\n======Starting round ${cactus.weeksOld + 1}======\n`);
 
   const actionOne = new Select({
     name: 'selectAction',
     message: '\nWhat would you like to do to the cactus first?',
-    choices: availableActions,
+    choices: gameText.availableActions,
   });
 
   await actionOne.run()
@@ -54,7 +69,7 @@ async function startRound(cactus) {
   const actionTwo = new Select({
     name: 'selectAction',
     message: '\nHow would you like to use your next action?',
-    choices: availableActions,
+    choices: gameText.availableActions,
   });
 
   await actionTwo.run()
@@ -74,6 +89,7 @@ async function startRound(cactus) {
     cactus.weeksOld += 1;
     await startRound(cactus);
   } else {
+    calculateCactusResults(cactus);
     logGameMessage('game over');
     process.exit();
   }
