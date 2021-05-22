@@ -25,11 +25,13 @@ function pourWater(cactus) {
 
 function turnOnSunLamp(cactus) {
   cactus.timeInSun += 1;
+  cactus.height += 0.3;
   logGameMessage('\nThe cactus warms up in the sun.');
 }
 
 function addFertilizer(cactus) {
   cactus.amountFertilized += 1;
+  cactus.height += 0.7;
   logGameMessage('\nThe cactus accepts the fertilizer.');
 }
 
