@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 const Cactus = require('../../Cactus');
 const {
-  pourWater, turnOnSunLamp, addFertilizer, calculateCactusResults,
+  pourWater, turnOnSunLamp, addFertilizer, floweringCactus,
 } = require('../../controller');
 
 describe('Test suite for controller functions', () => {
@@ -39,7 +39,7 @@ describe('Test suite for controller functions', () => {
     cactus.amountWatered = 5;
     cactus.amountFertilized = 1;
 
-    await calculateCactusResults(cactus);
+    await floweringCactus(cactus);
 
     expect(cactus.flowering).to.equal(true);
   });

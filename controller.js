@@ -36,13 +36,7 @@ function addFertilizer(cactus) {
   logGameMessage('\nThe cactus accepts the fertilizer.');
 }
 
-function calculateCactusResults(cactus) {
-  // Here we use Math.round to ensure there is only one decimal for cactus height
-  const finalHeight = Math.round(cactus.height * 10) / 10;
-
-  logGameMessage(art.endGameBorder);
-
-  // Here we create a flowering cactus
+function createFloweringCactus(cactus) {
   if (cactus.amountWatered >= 5 && cactus.amountFertilized === 1) {
     cactus.flowering = true;
 
@@ -51,29 +45,47 @@ function calculateCactusResults(cactus) {
 
     logGameMessage(art.floweringCactus);
   }
+}
 
-  // Here we create a sentient cactus
+function createSentientCactus(cactus) {
   if (cactus.amountFertilized >= 4 && cactus.timeInSun === 1 && cactus.amountWatered === 1) {
     cactus.sentient = true;
 
-    logGameMessage(`A combination of nutrients and sun produced something unexpected. It appears that you're
+    logGameMessage(`A combination of nutrients and sun produced something unexpected. It appears that your
     cactus is exhibiting intelligence and enjoys cowboy hats. Congratulations?`);
     logGameMessage(art.sentientCactus);
   }
+}
 
-  // Here we create a normal cactus
+function createNormalCactus(cactus) {
   if (cactus.amountWatered > 1 && !cactus.flowering && !cactus.sentient) {
-    logGameMessage(`Your cactus is ${finalHeight} inches tall.`);
+    logGameMessage(`Your cactus is ${cactus.height} inches tall.`);
     logGameMessage(art.normalCactus);
   }
+}
 
-  // Here is where cacti die
+function createDeadCactus(cactus) {
   if (cactus.amountWatered < 1) {
     cactus.dead = true;
 
     logGameMessage('\nYour cactus died.');
     logGameMessage(art.cactusAngel);
   }
+}
+
+function calculateCactusResults(cactus) {
+  // Here we use Math.round to ensure there is only one decimal for cactus height
+  cactus.height = Math.round(cactus.height * 10) / 10;
+
+  logGameMessage(art.endGameBorder);
+
+  createFloweringCactus(cactus);
+
+  createSentientCactus(cactus);
+
+  createNormalCactus(cactus);
+
+  createDeadCactus(cactus);
 }
 
 async function startRound(cactus) {
@@ -138,5 +150,5 @@ async function runGame(cactus) {
 }
 
 module.exports = {
-  runGame, pourWater, turnOnSunLamp, addFertilizer, calculateCactusResults,
+  runGame, pourWater, turnOnSunLamp, addFertilizer, floweringCactus: createFloweringCactus,
 };
