@@ -26,6 +26,15 @@ const floweringCactus = `
        |_________|
 `;
 
+const cactusAngel = `
+____ <==> ____
+\\___\\(**)/___/
+ \\___|  |___/ 
+     L  J 
+     |__|
+      vv
+`;
+
 const introMessage = `
   Welcome to the Cacti Corral!!!
   You will have 7 turns, each turn representing a week, to raise your cactus.
@@ -37,8 +46,9 @@ const availableActions = [
   'Give the cacti water',
   'Turn on the sun lamp',
   'Feed it a fertilizer pill',
+  'Do nothing',
 ];
 
 module.exports = {
-  coolCactiArt, introMessage, availableActions, floweringCactus,
+  coolCactiArt, introMessage, availableActions, floweringCactus, cactusAngel,
 };

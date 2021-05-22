@@ -4,6 +4,7 @@ const gameText = require('./constants');
 function logGameMessage(string) {
   // This keeps log clutter out of mocha tests
   if (process.env.NODE_ENV !== 'test') {
+    // eslint-disable-next-line no-console
     console.log(string);
   }
 }
@@ -33,7 +34,6 @@ function addFertilizer(cactus) {
 }
 
 function calculateCactusResults(cactus) {
-  console.log(cactus);
   if (cactus.amountWatered >= 8 && cactus.amountFertilized >= 6) {
     cactus.flowering = true;
     logGameMessage(`Congratulations, you have a flowering cactus that is 
@@ -43,11 +43,14 @@ function calculateCactusResults(cactus) {
 
   if (cactus.amountWatered < 3) {
     cactus.dead = true;
+    logGameMessage('\nYour cactus died.');
+    logGameMessage(gameText.cactusAngel);
   }
 }
 
 async function startRound(cactus) {
-  logGameMessage(`\n======Starting round ${cactus.weeksOld + 1}======\n`);
+  const currentRound = cactus.weeksOld + 1;
+  logGameMessage(`\n======Starting round ${currentRound}======\n`);
 
   const actionOne = new Select({
     name: 'selectAction',
@@ -80,6 +83,8 @@ async function startRound(cactus) {
         turnOnSunLamp(cactus);
       } else if (answer.includes('fertilize')) {
         addFertilizer(cactus);
+      } else {
+        // do nothing.
       }
     });
 
