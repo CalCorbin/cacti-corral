@@ -1,72 +1,103 @@
 const { Select } = require('enquirer');
-const { coolCactiArt, introMessage, availableActions } = require('./constants');
+const gameText = require('./constants');
+
+function logGameMessage(string) {
+  // This keeps log clutter out of mocha tests
+  if (process.env.NODE_ENV !== 'test') {
+    // eslint-disable-next-line no-console
+    console.log(string);
+  }
+}
 
 async function gameIntro(cactus) {
   if (cactus.weeksOld > 0) {
     return;
   }
-  console.log(coolCactiArt);
-  console.log(introMessage);
+  logGameMessage(gameText.coolCactiArt);
+  logGameMessage(gameText.introMessage);
 }
 
-async function pourWater(cactus) {
-  console.log('watering cactus', cactus);
+function pourWater(cactus) {
+  cactus.amountWatered += 1;
+  cactus.height += 0.5;
+  logGameMessage('\nThe cactus was watered.');
 }
 
-async function turnOnSunLamp(cactus) {
-  console.log('turning on the sun lamp', cactus);
+function turnOnSunLamp(cactus) {
+  cactus.timeInSun += 1;
+  cactus.height += 0.3;
+  logGameMessage('\nThe cactus warms up in the sun.');
 }
 
-async function addFertilizer(cactus) {
-  console.log('fertilizing the cactus', cactus);
+function addFertilizer(cactus) {
+  cactus.amountFertilized += 1;
+  cactus.height += 0.7;
+  logGameMessage('\nThe cactus accepts the fertilizer.');
+}
+
+function calculateCactusResults(cactus) {
+  if (cactus.amountWatered >= 8 && cactus.amountFertilized >= 6) {
+    cactus.flowering = true;
+    logGameMessage(`Congratulations, you have a flowering cactus that is 
+    ${cactus.height} inches tall!`);
+    logGameMessage(gameText.floweringCactus);
+  }
+
+  if (cactus.amountWatered < 3) {
+    cactus.dead = true;
+    logGameMessage('\nYour cactus died.');
+    logGameMessage(gameText.cactusAngel);
+  }
 }
 
 async function startRound(cactus) {
-  if (cactus.weeksOld > 7) {
-    // We want to end the game if cactus is older than 7 weeks.
-    return;
-  }
+  const currentRound = cactus.weeksOld + 1;
+  logGameMessage(`\n======Starting round ${currentRound}======\n`);
 
-  const actions = {
-    water: availableActions[0],
-    sunlight: availableActions[1],
-    fertilize: availableActions[2],
-  };
-
-  let actionsUsed = 0;
-
-  const userPrompt = actions === 0 ? '\nWhat would you like to do to the cactus first?'
-    : 'How would you like to use your last action this week?';
-
-  const question = {
+  const actionOne = new Select({
     name: 'selectAction',
-    message: userPrompt,
-    choices: availableActions,
-  };
+    message: '\nWhat would you like to do to the cactus first?',
+    choices: gameText.availableActions,
+  });
 
-  const round = new Select(question);
-
-  await round.run()
+  await actionOne.run()
     .then(async (answer) => {
-      actionsUsed += 1;
-
-      if (answer === actions.water) {
+      if (answer.includes('water')) {
         pourWater(cactus);
-      }
-
-      if (answer === actions.sunlight) {
+      } else if (answer.includes('sun')) {
         turnOnSunLamp(cactus);
-      }
-
-      if (answer === actions.fertilize) {
+      } else if (answer.includes('fertilize')) {
         addFertilizer(cactus);
       }
     });
 
-  if (actionsUsed < 2) {
-    startRound(cactus);
+  const actionTwo = new Select({
+    name: 'selectAction',
+    message: '\nHow would you like to use your next action?',
+    choices: gameText.availableActions,
+  });
+
+  await actionTwo.run()
+    .then(async (answer) => {
+      if (answer.includes('water')) {
+        pourWater(cactus);
+      } else if (answer.includes('sun')) {
+        turnOnSunLamp(cactus);
+      } else if (answer.includes('fertilize')) {
+        addFertilizer(cactus);
+      } else {
+        // do nothing.
+      }
+    });
+
+  // Since we start the game at 0 weeks,
+  // ending the game at 6 weeks adds up to 7 rounds.
+  if (cactus.weeksOld < 6) {
+    cactus.weeksOld += 1;
+    await startRound(cactus);
   } else {
-    console.log('game over');
+    calculateCactusResults(cactus);
+    logGameMessage('game over');
     process.exit();
   }
 }
@@ -77,4 +108,6 @@ async function runGame(cactus) {
   await startRound(cactus);
 }
 
-module.exports = { runGame };
+module.exports = {
+  runGame, pourWater, turnOnSunLamp, addFertilizer,
+};

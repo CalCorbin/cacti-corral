@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'test';
+
 const { expect } = require('chai');
 const Cactus = require('../../Cactus');
 
@@ -15,13 +17,13 @@ describe('Test suite for the cactus', () => {
   it('Should verify cactus is not flowering', () => {
     expect(cactus.flowering).to.equal(false);
   });
-  it('Should verify cactus has had zero weeks of sunlight', () => {
-    expect(cactus.weeksWith.sunlight).to.equal(0);
+  it('Should verify cactus has had zero sunlight', () => {
+    expect(cactus.timeInSun).to.equal(0);
   });
-  it('Should verify cactus has had zero weeks of watering', () => {
-    expect(cactus.weeksWith.water).to.equal(0);
+  it('Should verify cactus has had no water', () => {
+    expect(cactus.amountWatered).to.equal(0);
   });
-  it('Should verify cactus has had zero weeks of fertilizer', () => {
-    expect(cactus.weeksWith.fertilizer).to.equal(0);
+  it('Should verify cactus has not had any fertilizer', () => {
+    expect(cactus.amountFertilized).to.equal(0);
   });
 });

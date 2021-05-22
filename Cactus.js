@@ -3,11 +3,10 @@ class Cactus {
     this.weeksOld = 0;
     this.height = 1;
     this.flowering = false;
-    this.weeksWith = {
-      sunlight: 0,
-      water: 0,
-      fertilizer: 0,
-    };
+    this.amountWatered = 0;
+    this.timeInSun = 0;
+    this.amountFertilized = 0;
+    this.dead = false;
   }
 }
 
