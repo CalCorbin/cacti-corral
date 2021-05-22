@@ -25,6 +25,12 @@ describe('Test suite for controller functions', () => {
     expect(cactus.amountWatered).to.equal(1);
   });
 
+  it('Should verify cactus height increased after being watered', async () => {
+    await pourWater(cactus);
+
+    expect(cactus.height).to.equal(1.5);
+  });
+
   it('Should verify cactus can spend time in the sun', async () => {
     expect(cactus.timeInSun).to.equal(0);
 
@@ -33,12 +39,24 @@ describe('Test suite for controller functions', () => {
     expect(cactus.timeInSun).to.equal(1);
   });
 
+  it('Should verify cactus height increased after time in the sun lamp', async () => {
+    await turnOnSunLamp(cactus);
+
+    expect(cactus.height).to.equal(1.3);
+  });
+
   it('Should verify cactus has been fertilized', async () => {
     expect(cactus.amountFertilized).to.equal(0);
 
     await addFertilizer(cactus);
 
     expect(cactus.amountFertilized).to.equal(1);
+  });
+
+  it('Should verify cactus height increased after adding fertilizer', async () => {
+    await addFertilizer(cactus);
+
+    expect(cactus.height).to.equal(1.7);
   });
 
   it('Should have a flowering cactus', async () => {
