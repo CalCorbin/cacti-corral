@@ -1,7 +1,7 @@
 const introMessage = `
   Welcome to the Cacti Corral!!!
-  You will have 7 turns, each turn representing a week, to raise your cactus.
-  Your goal is to either get your cactus to 10 inches tall OR to get it to flower.
+  You will have 3 turns, each turn representing a week, to raise your cactus.
+  Your goal is to raise a happy and healthy cactus, think Tamagotchi from the 90s.
   There is also the possibility your cactus will dry up and die, so try to avoid that.
   `;
 

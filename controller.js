@@ -1,9 +1,9 @@
 const { Select } = require('enquirer');
 const text = require('./constants/gameMessages');
-const art = require('./constants/cactusArt');
+const art = require('./constants/gameArt');
 
 function logGameMessage(string) {
-  // This keeps log clutter out of mocha tests
+  // This function keeps console.log clutter out of mocha tests
   if (process.env.NODE_ENV !== 'test') {
     // eslint-disable-next-line no-console
     console.log(string);
@@ -37,7 +37,13 @@ function addFertilizer(cactus) {
 }
 
 function calculateCactusResults(cactus) {
-  if (cactus.amountWatered >= 5 && cactus.amountFertilized >= 1) {
+  // Here we use Math.round to ensure there is only one decimal for cactus height
+  const finalHeight = Math.round(cactus.height * 10) / 10;
+
+  logGameMessage(art.endGameBorder);
+
+  // Here we create a flowering cactus
+  if (cactus.amountWatered >= 5 && cactus.amountFertilized === 1) {
     cactus.flowering = true;
 
     logGameMessage(`Congratulations, you have a flowering cactus that is 
@@ -46,6 +52,22 @@ function calculateCactusResults(cactus) {
     logGameMessage(art.floweringCactus);
   }
 
+  // Here we create a sentient cactus
+  if (cactus.amountFertilized >= 4 && cactus.timeInSun === 1 && cactus.amountWatered === 1) {
+    cactus.sentient = true;
+
+    logGameMessage(`A combination of nutrients and sun produced something unexpected. It appears that you're
+    cactus is exhibiting intelligence and enjoys cowboy hats. Congratulations?`);
+    logGameMessage(art.sentientCactus);
+  }
+
+  // Here we create a normal cactus
+  if (cactus.amountWatered > 1 && !cactus.flowering && !cactus.sentient) {
+    logGameMessage(`Your cactus is ${finalHeight} inches tall.`);
+    logGameMessage(art.normalCactus);
+  }
+
+  // Here is where cacti die
   if (cactus.amountWatered < 1) {
     cactus.dead = true;
 
@@ -56,7 +78,7 @@ function calculateCactusResults(cactus) {
 
 async function startRound(cactus) {
   const currentRound = cactus.weeksOld + 1;
-  logGameMessage(`\n======Starting round ${currentRound}======\n`);
+  logGameMessage(`\n======Starting week ${currentRound}======\n`);
 
   const actionOne = new Select({
     name: 'selectAction',
@@ -94,14 +116,17 @@ async function startRound(cactus) {
       }
     });
 
-  // Since we start the game at 0 weeks,
-  // ending the game at 6 weeks adds up to 7 rounds.
-  if (cactus.weeksOld < 6) {
+  logGameMessage('\n!!!You have used up all your actions!!!');
+  logGameMessage('The sun sets on the cacti corral for this week.');
+  logGameMessage(art.sunset);
+  logGameMessage(art.endRoundBorder);
+
+  if (cactus.weeksOld < 2) {
     cactus.weeksOld += 1;
     await startRound(cactus);
   } else {
     calculateCactusResults(cactus);
-    logGameMessage('game over');
+    logGameMessage('\ngame over');
     process.exit();
   }
 }

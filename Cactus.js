@@ -7,6 +7,7 @@ class Cactus {
     this.timeInSun = 0;
     this.amountFertilized = 0;
     this.dead = false;
+    this.sentient = false;
   }
 }
 
