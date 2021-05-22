@@ -1,5 +1,5 @@
 const { Select } = require('enquirer');
-const gameText = require('./constants');
+const text = require('./constants/gameMessages');
 const art = require('./constants/cactusArt');
 
 function logGameMessage(string) {
@@ -15,7 +15,7 @@ async function gameIntro(cactus) {
     return;
   }
   logGameMessage(art.welcomeCactus);
-  logGameMessage(gameText.introMessage);
+  logGameMessage(text.introMessage);
 }
 
 function pourWater(cactus) {
@@ -61,7 +61,7 @@ async function startRound(cactus) {
   const actionOne = new Select({
     name: 'selectAction',
     message: '\nWhat would you like to do to the cactus first?',
-    choices: gameText.availableActions,
+    choices: text.availableActions,
   });
 
   await actionOne.run()
@@ -78,7 +78,7 @@ async function startRound(cactus) {
   const actionTwo = new Select({
     name: 'selectAction',
     message: '\nHow would you like to use your next action?',
-    choices: gameText.availableActions,
+    choices: text.availableActions,
   });
 
   await actionTwo.run()
