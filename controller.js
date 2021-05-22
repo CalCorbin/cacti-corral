@@ -150,5 +150,12 @@ async function runGame(cactus) {
 }
 
 module.exports = {
-  runGame, pourWater, turnOnSunLamp, addFertilizer, floweringCactus: createFloweringCactus,
+  runGame,
+  pourWater,
+  turnOnSunLamp,
+  addFertilizer,
+  createFloweringCactus,
+  createNormalCactus,
+  createSentientCactus,
+  createDeadCactus,
 };

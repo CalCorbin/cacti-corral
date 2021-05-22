@@ -3,7 +3,12 @@ process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 const Cactus = require('../../Cactus');
 const {
-  pourWater, turnOnSunLamp, addFertilizer, floweringCactus,
+  pourWater,
+  turnOnSunLamp,
+  addFertilizer,
+  createFloweringCactus,
+  createDeadCactus,
+  createSentientCactus,
 } = require('../../controller');
 
 describe('Test suite for controller functions', () => {
@@ -39,13 +44,23 @@ describe('Test suite for controller functions', () => {
     cactus.amountWatered = 5;
     cactus.amountFertilized = 1;
 
-    await floweringCactus(cactus);
+    await createFloweringCactus(cactus);
 
     expect(cactus.flowering).to.equal(true);
   });
 
+  it('Should create a cactus exhibiting intelligence', async () => {
+    cactus.amountFertilized = 4;
+    cactus.amountWatered = 1;
+    cactus.timeInSun = 1;
+
+    await createSentientCactus(cactus);
+
+    expect(cactus.sentient).to.equal(true);
+  });
+
   it('Should have a cactus that died', async () => {
-    await calculateCactusResults(cactus);
+    await createDeadCactus(cactus);
 
     expect(cactus.dead).to.equal(true);
   });
