@@ -144,6 +144,12 @@ async function spendRoundActions(cactus) {
     });
 }
 
+function endGame(cactus) {
+  calculateCactusResults(cactus);
+  logGameMessage('\nThanks for playing! Yall come back to the Cacti Corral now, ya hear!\n');
+  process.exit();
+}
+
 async function startRound(cactus) {
   logGameMessage(`\n======Starting week ${cactus.weeksOld}======\n`);
 
@@ -156,11 +162,9 @@ async function startRound(cactus) {
 
   if (cactus.weeksOld < 3) {
     cactus.weeksOld += 1;
-    startRound(cactus);
+    await startRound(cactus);
   } else {
-    calculateCactusResults(cactus);
-    logGameMessage('\nThanks for playing! Yall come back to the Cacti Corral now, ya hear!');
-    process.exit();
+    endGame(cactus);
   }
 }
 
