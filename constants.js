@@ -17,7 +17,7 @@ const introMessage = `
   `;
 
 const availableActions = [
-  'Water the cacti',
+  'Give the cacti water',
   'Turn on the sun lamp',
   'Feed it a fertilizer pill',
 ];
