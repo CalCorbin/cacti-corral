@@ -9,6 +9,7 @@ const {
   createFloweringCactus,
   createDeadCactus,
   createSentientCactus,
+  createNormalCactus,
 } = require('../../controller');
 
 describe('Test suite for controller functions', () => {
@@ -57,6 +58,16 @@ describe('Test suite for controller functions', () => {
     await createSentientCactus(cactus);
 
     expect(cactus.sentient).to.equal(true);
+  });
+
+  it('Should create a normal cactus that did not die', async () => {
+    cactus.amountFertilized = 1;
+    cactus.amountWatered = 2;
+    cactus.timeInSun = 3;
+
+    await createNormalCactus(cactus);
+
+    expect(cactus.dead).to.equal(false);
   });
 
   it('Should have a cactus that died', async () => {
