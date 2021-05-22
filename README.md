@@ -11,6 +11,7 @@
         1. Water the cactus.
         1. Fertilize the cactus with a pill.
         1. Turn on sun lamp.
+        1. Do nothing.
 1. At the end of week 3, will your cactus be happy and flowering? Or will it be short and spikey?  
     
 ## Installation

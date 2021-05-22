@@ -11,7 +11,7 @@ function logGameMessage(string) {
 }
 
 async function gameIntro(cactus) {
-  if (cactus.weeksOld > 0) {
+  if (cactus.weeksOld > 1) {
     return;
   }
   logGameMessage(art.welcomeCactus);
@@ -101,12 +101,12 @@ function calculateCactusResults(cactus) {
   createNormalCactus(cactus);
 
   createDeadCactus(cactus);
+
+  logGameMessage('\nHere are your final cactus stats:');
+  logGameMessage(cactus);
 }
 
-async function startRound(cactus) {
-  const currentRound = cactus.weeksOld + 1;
-  logGameMessage(`\n======Starting week ${currentRound}======\n`);
-
+async function spendRoundActions(cactus) {
   const actionOne = new Select({
     name: 'selectAction',
     message: '\nWhat would you like to do to the cactus first?',
@@ -142,18 +142,24 @@ async function startRound(cactus) {
         // do nothing.
       }
     });
+}
+
+async function startRound(cactus) {
+  logGameMessage(`\n======Starting week ${cactus.weeksOld}======\n`);
+
+  await spendRoundActions(cactus);
 
   logGameMessage('\n!!!You have used up all your actions!!!');
   logGameMessage('The sun sets on the cacti corral for this week.');
   logGameMessage(art.sunset);
   logGameMessage(art.endRoundBorder);
 
-  if (cactus.weeksOld < 2) {
+  if (cactus.weeksOld < 3) {
     cactus.weeksOld += 1;
-    await startRound(cactus);
+    startRound(cactus);
   } else {
     calculateCactusResults(cactus);
-    logGameMessage('\ngame over');
+    logGameMessage('\nThanks for playing! Yall come back to the Cacti Corral now, ya hear!');
     process.exit();
   }
 }
