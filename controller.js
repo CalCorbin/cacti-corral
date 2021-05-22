@@ -37,7 +37,7 @@ function addFertilizer(cactus) {
 }
 
 function calculateCactusResults(cactus) {
-  if (cactus.amountWatered >= 8 && cactus.amountFertilized >= 6) {
+  if (cactus.amountWatered >= 5 && cactus.amountFertilized >= 1) {
     cactus.flowering = true;
 
     logGameMessage(`Congratulations, you have a flowering cactus that is 
@@ -46,7 +46,7 @@ function calculateCactusResults(cactus) {
     logGameMessage(art.floweringCactus);
   }
 
-  if (cactus.amountWatered < 3) {
+  if (cactus.amountWatered < 1) {
     cactus.dead = true;
 
     logGameMessage('\nYour cactus died.');
@@ -113,5 +113,5 @@ async function runGame(cactus) {
 }
 
 module.exports = {
-  runGame, pourWater, turnOnSunLamp, addFertilizer,
+  runGame, pourWater, turnOnSunLamp, addFertilizer, calculateCactusResults,
 };
