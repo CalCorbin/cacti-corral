@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'test';
+
 const { expect } = require('chai');
 const Cactus = require('../../Cactus');
 const { pourWater, turnOnSunLamp, addFertilizer } = require('../../controller');

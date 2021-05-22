@@ -1,31 +1,38 @@
 const { Select } = require('enquirer');
 const { coolCactiArt, introMessage, availableActions } = require('./constants');
 
+function logGameMessage(string) {
+  // This keeps log clutter out of mocha tests
+  if (process.env.NODE_ENV !== 'test') {
+    console.log(string);
+  }
+}
+
 async function gameIntro(cactus) {
   if (cactus.weeksOld > 0) {
     return;
   }
-  console.log(coolCactiArt);
-  console.log(introMessage);
+  logGameMessage(coolCactiArt);
+  logGameMessage(introMessage);
 }
 
 function pourWater(cactus) {
   cactus.amountWatered += 1;
-  console.log('\nThe cactus was watered.');
+  logGameMessage('\nThe cactus was watered.');
 }
 
 function turnOnSunLamp(cactus) {
   cactus.timeInSun += 1;
-  console.log('\nThe cactus warms up in the sun.');
+  logGameMessage('\nThe cactus warms up in the sun.');
 }
 
 function addFertilizer(cactus) {
   cactus.amountFertilized += 1;
-  console.log('\nThe cactus accepts the fertilizer.');
+  logGameMessage('\nThe cactus accepts the fertilizer.');
 }
 
 async function startRound(cactus) {
-  console.log(`\nStarting round ${cactus.weeksOld + 1}`);
+  logGameMessage(`\nStarting round ${cactus.weeksOld + 1}`);
 
   const actionOne = new Select({
     name: 'selectAction',
@@ -67,7 +74,7 @@ async function startRound(cactus) {
     cactus.weeksOld += 1;
     await startRound(cactus);
   } else {
-    console.log('game over');
+    logGameMessage('game over');
     process.exit();
   }
 }
