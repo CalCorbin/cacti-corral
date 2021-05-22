@@ -1,5 +1,6 @@
 const { Select } = require('enquirer');
 const gameText = require('./constants');
+const art = require('./constants/cactusArt');
 
 function logGameMessage(string) {
   // This keeps log clutter out of mocha tests
@@ -13,7 +14,7 @@ async function gameIntro(cactus) {
   if (cactus.weeksOld > 0) {
     return;
   }
-  logGameMessage(gameText.coolCactiArt);
+  logGameMessage(art.welcomeCactus);
   logGameMessage(gameText.introMessage);
 }
 
@@ -38,15 +39,18 @@ function addFertilizer(cactus) {
 function calculateCactusResults(cactus) {
   if (cactus.amountWatered >= 8 && cactus.amountFertilized >= 6) {
     cactus.flowering = true;
+
     logGameMessage(`Congratulations, you have a flowering cactus that is 
     ${cactus.height} inches tall!`);
-    logGameMessage(gameText.floweringCactus);
+
+    logGameMessage(art.floweringCactus);
   }
 
   if (cactus.amountWatered < 3) {
     cactus.dead = true;
+
     logGameMessage('\nYour cactus died.');
-    logGameMessage(gameText.cactusAngel);
+    logGameMessage(art.cactusAngel);
   }
 }
 

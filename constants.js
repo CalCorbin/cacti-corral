@@ -1,40 +1,3 @@
-const coolCactiArt = `
-    ,*-.
-    |  |
-,.  |  |
-| |_|  | ,.
-\`---.  |_| |
-    |  .--\`
-    |  |
-    |  |
-`;
-
-const floweringCactus = `
-          vVVVv
-          (___)
-           *-*,
-       ,*\\/|\`| \\
-       \\'  | |'| *,
-        \\ \`| | |/ )
-         | |'| , /
-         |'| |, /
-       __|_|_|_|__
-      [___________]
-       |         |
-       |         |
-       |         |
-       |_________|
-`;
-
-const cactusAngel = `
-____ <==> ____
-\\___\\(**)/___/
- \\___|  |___/ 
-     L  J 
-     |__|
-      vv
-`;
-
 const introMessage = `
   Welcome to the Cacti Corral!!!
   You will have 7 turns, each turn representing a week, to raise your cactus.
@@ -50,5 +13,5 @@ const availableActions = [
 ];
 
 module.exports = {
-  coolCactiArt, introMessage, availableActions, floweringCactus, cactusAngel,
+  introMessage, availableActions,
 };
