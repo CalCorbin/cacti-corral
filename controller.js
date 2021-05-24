@@ -86,7 +86,50 @@ function createDeadCactus(cactus) {
   }
 }
 
-function calculateCactusResults(cactus) {
+async function useMysteriousBottle(cactus) {
+  const action = new Select({
+    name: 'selectAction',
+    message: `A mysterious bottle appears next to your cactus. The label says "CACTI NUTRIENT X: CONSUME AT YOUR OWN RISK".
+    Do you want to give some of the nutrients to your cactus? This action cannot be undone.`,
+    choices: [
+      'Yes',
+      'No',
+    ],
+  });
+
+  await action.run()
+    .then(async (answer) => {
+      if (answer === 'Yes') {
+        const diceRoll = Math.ceil(Math.random() * 6);
+
+        switch (diceRoll) {
+          case 1:
+            cactus.height += 10;
+            logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
+            break;
+          case 2:
+            cactus.owl = true;
+            logGameMessage(`\nLooks like the mystery bottle did not do anything, but an owl moved'
+             into your cactus!`);
+            logGameMessage(art.owl);
+            break;
+          case 3:
+            cactus.fruiting = true;
+            logGameMessage('\nYour cactus looks to be bearing fruit!');
+            logGameMessage(art.apple);
+            break;
+          default:
+            cactus.dead = true;
+            logGameMessage('\nYour cactus died.');
+            logGameMessage(art.cactusAngel);
+            process.exit();
+            break;
+        }
+      }
+    });
+}
+
+async function calculateCactusResults(cactus) {
   // Here we use Math.round to ensure there is only one decimal for cactus height
   cactus.height = Math.round(cactus.height * 10) / 10;
 
@@ -144,7 +187,8 @@ async function spendRoundActions(cactus) {
     });
 }
 
-function endGame(cactus) {
+async function endGame(cactus) {
+  await useMysteriousBottle(cactus);
   calculateCactusResults(cactus);
   logGameMessage('\nThanks for playing! Yall come back to the Cacti Corral now, ya hear!\n');
   process.exit();
