@@ -94,4 +94,30 @@ describe('Test suite for controller functions', () => {
 
     expect(cactus.dead).to.equal(true);
   });
+
+  it('Should use determineBottleEffect to grow cactus ten inches and not kill it', async () => {
+    await controller.determineBottleEffect(1, cactus);
+
+    // Cactus default height is 1, so adding 10 inches equals 11.
+    expect(cactus.height).to.equal(11);
+    expect(cactus.dead).to.equal(false);
+  });
+
+  it('Should use determineBottleEffect to have an owl make a nest in the cactus', async () => {
+    await controller.determineBottleEffect(2, cactus);
+
+    expect(cactus.owl).to.equal(true);
+  });
+
+  it('Should use determineBottleEffect to make the cactus start fruiting', async () => {
+    await controller.determineBottleEffect(3, cactus);
+
+    expect(cactus.fruiting).to.equal(true);
+  });
+
+  it('Should use determineBottleEffect to kill the cactus', async () => {
+    await controller.determineBottleEffect(6, cactus);
+
+    expect(cactus.dead).to.equal(true);
+  });
 });

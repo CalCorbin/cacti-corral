@@ -78,11 +78,35 @@ function createNormalCactus(cactus) {
 }
 
 function createDeadCactus(cactus) {
-  if (cactus.amountWatered < 1) {
+  if (cactus.amountWatered < 1 || cactus.dead) {
     cactus.dead = true;
 
     logGameMessage('\nYour cactus died.');
     logGameMessage(art.cactusAngel);
+  }
+}
+
+function determineBottleEffect(diceRoll, cactus) {
+  switch (diceRoll) {
+    case 1:
+      cactus.height += 10;
+      logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
+      break;
+    case 2:
+      cactus.owl = true;
+      logGameMessage(`\nLooks like the mystery bottle did not do anything, but an owl moved
+      into your cactus!`);
+      logGameMessage(art.owl);
+      break;
+    case 3:
+      cactus.fruiting = true;
+      logGameMessage('\nYour cactus looks to be bearing fruit!');
+      logGameMessage(art.apple);
+      break;
+    default:
+      cactus.dead = true;
+      logGameMessage("\nYour cactus doesn't look too good..");
+      break;
   }
 }
 
@@ -102,29 +126,8 @@ async function useMysteriousBottle(cactus) {
       if (answer === 'Yes') {
         const diceRoll = Math.ceil(Math.random() * 6);
 
-        switch (diceRoll) {
-          case 1:
-            cactus.height += 10;
-            logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
-            break;
-          case 2:
-            cactus.owl = true;
-            logGameMessage(`\nLooks like the mystery bottle did not do anything, but an owl moved'
-             into your cactus!`);
-            logGameMessage(art.owl);
-            break;
-          case 3:
-            cactus.fruiting = true;
-            logGameMessage('\nYour cactus looks to be bearing fruit!');
-            logGameMessage(art.apple);
-            break;
-          default:
-            cactus.dead = true;
-            logGameMessage('\nYour cactus died.');
-            logGameMessage(art.cactusAngel);
-            process.exit();
-            break;
-        }
+        console.log('DICE ROLL', diceRoll);
+        determineBottleEffect(diceRoll, cactus);
       }
     });
 }
@@ -135,15 +138,19 @@ function calculateCactusResults(cactus) {
 
   logGameMessage(art.endGameBorder);
 
-  createFloweringCactus(cactus);
+  // We check if the cactus is dead because using the mysterious bottle
+  // has a high chance of killing the cactus.
+  if (!cactus.dead) {
+    createFloweringCactus(cactus);
 
-  createSentientCactus(cactus);
+    createSentientCactus(cactus);
 
-  createSpikyCactus(cactus);
+    createSpikyCactus(cactus);
 
-  createNormalCactus(cactus);
-
-  createDeadCactus(cactus);
+    createNormalCactus(cactus);
+  } else {
+    createDeadCactus(cactus);
+  }
 
   logGameMessage('\nHere are your final cactus stats:');
   logGameMessage(cactus);
@@ -228,4 +235,5 @@ module.exports = {
   createSentientCactus,
   createSpikyCactus,
   createDeadCactus,
+  determineBottleEffect,
 };
