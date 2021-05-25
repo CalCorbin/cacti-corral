@@ -9,6 +9,8 @@ class Cactus {
     this.dead = false;
     this.sentient = false;
     this.spiky = false;
+    this.owl = false;
+    this.fruiting = false;
   }
 }
 
