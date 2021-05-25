@@ -126,7 +126,6 @@ async function useMysteriousBottle(cactus) {
       if (answer === 'Yes') {
         const diceRoll = Math.ceil(Math.random() * 6);
 
-        console.log('DICE ROLL', diceRoll);
         determineBottleEffect(diceRoll, cactus);
       }
     });
