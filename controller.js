@@ -129,9 +129,9 @@ async function useMysteriousBottle(cactus) {
     });
 }
 
-async function calculateCactusResults(cactus) {
-  // Here we use Math.round to ensure there is only one decimal for cactus height
-  cactus.height = Math.round(cactus.height * 10) / 10;
+function calculateCactusResults(cactus) {
+  // We use toFixed() to keep the cactus height decimal from getting too long.
+  cactus.height = cactus.height.toFixed(1);
 
   logGameMessage(art.endGameBorder);
 
