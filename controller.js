@@ -86,6 +86,29 @@ function createDeadCactus(cactus) {
   }
 }
 
+function determineBottleEffect(diceRoll, cactus) {
+  switch (diceRoll) {
+    case 1:
+      cactus.height += 10;
+      logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
+      break;
+    case 2:
+      cactus.owl = true;
+      logGameMessage(`\nLooks like the mystery bottle did not do anything, but an owl moved
+      into your cactus!`);
+      logGameMessage(art.owl);
+      break;
+    case 3:
+      cactus.fruiting = true;
+      logGameMessage('\nYour cactus looks to be bearing fruit!');
+      logGameMessage(art.apple);
+      break;
+    default:
+      createDeadCactus(cactus);
+      break;
+  }
+}
+
 async function useMysteriousBottle(cactus) {
   const action = new Select({
     name: 'selectAction',
@@ -102,29 +125,7 @@ async function useMysteriousBottle(cactus) {
       if (answer === 'Yes') {
         const diceRoll = Math.ceil(Math.random() * 6);
 
-        switch (diceRoll) {
-          case 1:
-            cactus.height += 10;
-            logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
-            break;
-          case 2:
-            cactus.owl = true;
-            logGameMessage(`\nLooks like the mystery bottle did not do anything, but an owl moved'
-             into your cactus!`);
-            logGameMessage(art.owl);
-            break;
-          case 3:
-            cactus.fruiting = true;
-            logGameMessage('\nYour cactus looks to be bearing fruit!');
-            logGameMessage(art.apple);
-            break;
-          default:
-            cactus.dead = true;
-            logGameMessage('\nYour cactus died.');
-            logGameMessage(art.cactusAngel);
-            process.exit();
-            break;
-        }
+        determineBottleEffect(diceRoll, cactus);
       }
     });
 }
@@ -132,6 +133,10 @@ async function useMysteriousBottle(cactus) {
 function calculateCactusResults(cactus) {
   // We use toFixed() to keep the cactus height decimal from getting too long.
   cactus.height = cactus.height.toFixed(1);
+
+  if (cactus.dead) {
+    return;
+  }
 
   logGameMessage(art.endGameBorder);
 
@@ -228,4 +233,5 @@ module.exports = {
   createSentientCactus,
   createSpikyCactus,
   createDeadCactus,
+  determineBottleEffect,
 };
