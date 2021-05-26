@@ -17,3 +17,7 @@
 ## Installation
 1. Run `npm install`
 1. To start the game `npm run cacti`
+
+## Dev
+1. To run linting for CI: `npm run lint:js`
+1. To run unit tests for CI: `npm run test`
