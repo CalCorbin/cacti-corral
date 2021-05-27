@@ -89,7 +89,7 @@ describe('Test suite for controller functions', () => {
     expect(cactus.dead).to.equal(false);
   });
 
-  it('Should have a cactus that died', async () => {
+  it('Should create a dead cactus that', async () => {
     await controller.createDeadCactus(cactus);
 
     expect(cactus.dead).to.equal(true);
@@ -119,5 +119,53 @@ describe('Test suite for controller functions', () => {
     await controller.determineBottleEffect(6, cactus);
 
     expect(cactus.dead).to.equal(true);
+  });
+
+  it('Should verify cactus is sentient', async () => {
+    await controller.isSentient(cactus);
+
+    expect(cactus.sentient).to.equal(true);
+  });
+
+  it('Should verify cactus is not sentient', async () => {
+    await controller.isSentient(cactus);
+
+    expect(cactus.sentient).to.equal(false);
+  });
+
+  it('Should verify cactus is normal', async () => {
+    await controller.isNormal(cactus);
+
+    expect(cactus.sentient).to.equal(true);
+  });
+
+  it('Should verify cactus is not normal', async () => {
+    await controller.isNormal(cactus);
+
+    expect(cactus.sentient).to.equal(false);
+  });
+
+  it('Should verify cactus is spiky', async () => {
+    await controller.isSpiky(cactus);
+
+    expect(cactus.sentient).to.equal(true);
+  });
+
+  it('Should verify cactus is not spiky', async () => {
+    await controller.isSpiky(cactus);
+
+    expect(cactus.sentient).to.equal(false);
+  });
+
+  it('Should verify cactus is dead', async () => {
+    await controller.isSentient(cactus);
+
+    expect(cactus.sentient).to.equal(true);
+  });
+
+  it('Should verify cactus is not dead', async () => {
+    await controller.isSentient(cactus);
+
+    expect(cactus.sentient).to.equal(false);
   });
 });

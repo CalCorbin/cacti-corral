@@ -19,8 +19,9 @@ async function gameIntro(cactus) {
 }
 
 function pourWater(cactus) {
-  cactus.amountWatered += 1;
-  cactus.height += 0.5;
+  cactus.setAmountWatered(cactus.amountWatered + 1);
+  cactus.setHeight(cactus.height + 0.5);
+
   logGameMessage('\nThe cactus was watered.');
 }
 
@@ -47,8 +48,12 @@ function createFloweringCactus(cactus) {
   }
 }
 
+function isSentient({ amountFertilized, timeInSun, amountWatered }) {
+  return amountFertilized >= 4 && timeInSun === 1 && amountWatered === 1;
+}
+
 function createSentientCactus(cactus) {
-  if (cactus.amountFertilized >= 4 && cactus.timeInSun === 1 && cactus.amountWatered === 1) {
+  if (isSentient(cactus)) {
     cactus.sentient = true;
 
     logGameMessage(`A combination of nutrients and sun produced something unexpected. It appears that your
@@ -57,8 +62,12 @@ function createSentientCactus(cactus) {
   }
 }
 
+function isSpiky({ timeInSun, amountWatered }) {
+  return timeInSun === 5 && amountWatered === 1;
+}
+
 function createSpikyCactus(cactus) {
-  if (cactus.timeInSun === 5 && cactus.amountWatered === 1) {
+  if (isSpiky(cactus)) {
     cactus.spiky = true;
 
     logGameMessage(`You sure did give your cactus a lot of sun. It is ${cactus.height} inches tall and 
@@ -67,18 +76,31 @@ function createSpikyCactus(cactus) {
   }
 }
 
+function isNormal({
+  amountWatered,
+  flowering,
+  sentient,
+  spiky,
+}) {
+  return amountWatered >= 1
+    && !flowering
+    && !sentient
+    && !spiky;
+}
+
 function createNormalCactus(cactus) {
-  if (cactus.amountWatered >= 1
-  && !cactus.flowering
-  && !cactus.sentient
-  && !cactus.spiky) {
+  if (isNormal(cactus)) {
     logGameMessage(`Your cactus is ${cactus.height} inches tall.`);
     logGameMessage(art.normalCactus);
   }
 }
 
+function isDead({ amountWatered, dead }) {
+  return amountWatered < 1 || dead;
+}
+
 function createDeadCactus(cactus) {
-  if (cactus.amountWatered < 1 || cactus.dead) {
+  if (isDead(cactus)) {
     cactus.dead = true;
 
     logGameMessage('\nYour cactus died.');
@@ -235,4 +257,8 @@ module.exports = {
   createSpikyCactus,
   createDeadCactus,
   determineBottleEffect,
+  isSentient,
+  isNormal,
+  isSpiky,
+  isDead,
 };

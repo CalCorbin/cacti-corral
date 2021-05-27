@@ -12,6 +12,14 @@ class Cactus {
     this.owl = false;
     this.fruiting = false;
   }
+
+  setAmountWatered(amount) {
+    this.amountWatered = amount;
+  }
+
+  setHeight(height) {
+    this.height = height;
+  }
 }
 
 module.exports = Cactus;
