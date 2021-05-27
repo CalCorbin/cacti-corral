@@ -43,4 +43,16 @@ describe('Test suite for the cactus', () => {
   it('Should verify cactus has not had any fertilizer', () => {
     expect(cactus.amountFertilized).to.equal(0);
   });
+
+  it('Should set amount cactus is watered', () => {
+    cactus.setAmountWatered(3);
+
+    expect(cactus.amountWatered).to.equal(3);
+  });
+
+  it('Should set cactus height', () => {
+    cactus.setHeight(3);
+
+    expect(cactus.height).to.equal(4);
+  });
 });
