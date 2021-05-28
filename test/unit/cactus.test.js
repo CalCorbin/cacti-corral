@@ -53,6 +53,6 @@ describe('Test suite for the cactus', () => {
   it('Should set cactus height', () => {
     cactus.setHeight(3);
 
-    expect(cactus.height).to.equal(4);
+    expect(cactus.height).to.equal(3);
   });
 });

@@ -122,50 +122,63 @@ describe('Test suite for controller functions', () => {
   });
 
   it('Should verify cactus is sentient', async () => {
-    await controller.isSentient(cactus);
+    cactus.amountFertilized = 4;
+    cactus.timeInSun = 1;
+    cactus.amountWatered = 1;
 
-    expect(cactus.sentient).to.equal(true);
+    const sentient = await controller.isSentient(cactus);
+
+    expect(sentient).to.equal(true);
   });
 
   it('Should verify cactus is not sentient', async () => {
-    await controller.isSentient(cactus);
+    const sentient = await controller.isSentient(cactus);
 
-    expect(cactus.sentient).to.equal(false);
+    expect(sentient).to.equal(false);
   });
 
   it('Should verify cactus is normal', async () => {
-    await controller.isNormal(cactus);
+    cactus.amountWatered = 2;
 
-    expect(cactus.sentient).to.equal(true);
+    const normal = await controller.isNormal(cactus);
+
+    expect(normal).to.equal(true);
   });
 
   it('Should verify cactus is not normal', async () => {
-    await controller.isNormal(cactus);
+    const normal = await controller.isNormal(cactus);
 
-    expect(cactus.sentient).to.equal(false);
+    expect(normal).to.equal(false);
   });
 
   it('Should verify cactus is spiky', async () => {
-    await controller.isSpiky(cactus);
+    cactus.timeInSun = 5;
+    cactus.amountWatered = 1;
 
-    expect(cactus.sentient).to.equal(true);
+    const spiky = await controller.isSpiky(cactus);
+
+    expect(spiky).to.equal(true);
   });
 
   it('Should verify cactus is not spiky', async () => {
-    await controller.isSpiky(cactus);
+    const spiky = await controller.isSpiky(cactus);
 
-    expect(cactus.sentient).to.equal(false);
+    expect(spiky).to.equal(false);
   });
 
   it('Should verify cactus is dead', async () => {
-    await controller.isSentient(cactus);
+    cactus.amountWatered = 0;
 
-    expect(cactus.sentient).to.equal(true);
+    const dead = await controller.isDead(cactus);
+
+    expect(dead).to.equal(true);
   });
 
   it('Should verify cactus is not dead', async () => {
-    await controller.isSentient(cactus);
+    cactus.amountWatered = 1;
 
-    expect(cactus.sentient).to.equal(false);
+    const dead = await controller.isDead(cactus);
+
+    expect(dead).to.equal(false);
   });
 });
