@@ -19,26 +19,29 @@ async function gameIntro(cactus) {
 }
 
 function pourWater(cactus) {
-  cactus.amountWatered += 1;
-  cactus.height += 0.5;
+  cactus.setAmountWatered(cactus.amountWatered + 1);
+  cactus.setHeight(cactus.height + 0.5);
+
   logGameMessage('\nThe cactus was watered.');
 }
 
 function turnOnSunLamp(cactus) {
-  cactus.timeInSun += 1;
-  cactus.height += 0.3;
+  cactus.setTimeInSun(cactus.timeInSun + 1);
+  cactus.setHeight(cactus.height + 0.3);
+
   logGameMessage('\nThe cactus warms up in the sun lamp.');
 }
 
 function addFertilizer(cactus) {
-  cactus.amountFertilized += 1;
-  cactus.height += 0.7;
+  cactus.setAmountFertilized(cactus.amountFertilized + 1);
+  cactus.setHeight(cactus.height + 0.7);
+
   logGameMessage('\nThe cactus accepts the fertilizer.');
 }
 
 function createFloweringCactus(cactus) {
   if (cactus.amountWatered >= 5 && cactus.amountFertilized === 1) {
-    cactus.flowering = true;
+    cactus.setFlowering();
 
     logGameMessage(`Congratulations, you have a flowering cactus that is 
     ${cactus.height} inches tall!`);
@@ -47,9 +50,13 @@ function createFloweringCactus(cactus) {
   }
 }
 
+function isSentient({ amountFertilized, timeInSun, amountWatered }) {
+  return amountFertilized >= 4 && timeInSun === 1 && amountWatered === 1;
+}
+
 function createSentientCactus(cactus) {
-  if (cactus.amountFertilized >= 4 && cactus.timeInSun === 1 && cactus.amountWatered === 1) {
-    cactus.sentient = true;
+  if (isSentient(cactus)) {
+    cactus.setSentient();
 
     logGameMessage(`A combination of nutrients and sun produced something unexpected. It appears that your
     cactus is exhibiting intelligence and enjoys cowboy hats. Congratulations?`);
@@ -57,9 +64,13 @@ function createSentientCactus(cactus) {
   }
 }
 
+function isSpiky({ timeInSun, amountWatered }) {
+  return timeInSun === 5 && amountWatered === 1;
+}
+
 function createSpikyCactus(cactus) {
-  if (cactus.timeInSun === 5 && cactus.amountWatered === 1) {
-    cactus.spiky = true;
+  if (isSpiky(cactus)) {
+    cactus.setSpiky();
 
     logGameMessage(`You sure did give your cactus a lot of sun. It is ${cactus.height} inches tall and 
     look at all those sharp spikes!`);
@@ -67,19 +78,32 @@ function createSpikyCactus(cactus) {
   }
 }
 
+function isNormal({
+  amountWatered,
+  flowering,
+  sentient,
+  spiky,
+}) {
+  return amountWatered >= 1
+    && !flowering
+    && !sentient
+    && !spiky;
+}
+
 function createNormalCactus(cactus) {
-  if (cactus.amountWatered >= 1
-  && !cactus.flowering
-  && !cactus.sentient
-  && !cactus.spiky) {
+  if (isNormal(cactus)) {
     logGameMessage(`Your cactus is ${cactus.height} inches tall.`);
     logGameMessage(art.normalCactus);
   }
 }
 
+function isDead({ amountWatered, dead }) {
+  return amountWatered < 1 || dead;
+}
+
 function createDeadCactus(cactus) {
-  if (cactus.amountWatered < 1 || cactus.dead) {
-    cactus.dead = true;
+  if (isDead(cactus)) {
+    cactus.setDead();
 
     logGameMessage('\nYour cactus died.');
     logGameMessage(art.cactusAngel);
@@ -89,22 +113,22 @@ function createDeadCactus(cactus) {
 function determineBottleEffect(diceRoll, cactus) {
   switch (diceRoll) {
     case 1:
-      cactus.height += 10;
+      cactus.setHeight(cactus.height + 10);
       logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
       break;
     case 2:
-      cactus.owl = true;
+      cactus.setOwl();
       logGameMessage(`\nLooks like the mystery bottle did not do anything, but an owl moved
       into your cactus!`);
       logGameMessage(art.owl);
       break;
     case 3:
-      cactus.fruiting = true;
+      cactus.setFruiting();
       logGameMessage('\nYour cactus looks to be bearing fruit!');
       logGameMessage(art.apple);
       break;
     default:
-      cactus.dead = true;
+      cactus.setDead();
       logGameMessage("\nYour cactus doesn't look too good..");
       break;
   }
@@ -133,7 +157,7 @@ async function useMysteriousBottle(cactus) {
 
 function calculateCactusResults(cactus) {
   // We use toFixed() to keep the cactus height decimal from getting too long.
-  cactus.height = cactus.height.toFixed(1);
+  cactus.setHeight(cactus.height.toFixed(1));
 
   logGameMessage(art.endGameBorder);
 
@@ -211,7 +235,8 @@ async function startRound(cactus) {
   logGameMessage(art.endRoundBorder);
 
   if (cactus.weeksOld < 3) {
-    cactus.weeksOld += 1;
+    cactus.setWeeksOld(cactus.weeksOld + 1);
+
     await startRound(cactus);
   } else {
     endGame(cactus);
@@ -235,4 +260,8 @@ module.exports = {
   createSpikyCactus,
   createDeadCactus,
   determineBottleEffect,
+  isSentient,
+  isNormal,
+  isSpiky,
+  isDead,
 };

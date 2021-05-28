@@ -12,6 +12,50 @@ class Cactus {
     this.owl = false;
     this.fruiting = false;
   }
+
+  setWeeksOld(weeksOld) {
+    this.weeksOld = weeksOld;
+  }
+
+  setAmountWatered(amountWatered) {
+    this.amountWatered = amountWatered;
+  }
+
+  setHeight(height) {
+    this.height = height;
+  }
+
+  setTimeInSun(timeInSun) {
+    this.timeInSun = timeInSun;
+  }
+
+  setAmountFertilized(amountFertilized) {
+    this.amountFertilized = amountFertilized;
+  }
+
+  setFlowering() {
+    this.flowering = true;
+  }
+
+  setSentient() {
+    this.sentient = true;
+  }
+
+  setSpiky() {
+    this.spiky = true;
+  }
+
+  setDead() {
+    this.dead = true;
+  }
+
+  setOwl() {
+    this.owl = true;
+  }
+
+  setFruiting() {
+    this.fruiting = true;
+  }
 }
 
 module.exports = Cactus;

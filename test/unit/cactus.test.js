@@ -43,4 +43,70 @@ describe('Test suite for the cactus', () => {
   it('Should verify cactus has not had any fertilizer', () => {
     expect(cactus.amountFertilized).to.equal(0);
   });
+
+  it('Should set amount cactus is watered', () => {
+    cactus.setAmountWatered(3);
+
+    expect(cactus.amountWatered).to.equal(3);
+  });
+
+  it('Should set cactus height', () => {
+    cactus.setHeight(3);
+
+    expect(cactus.height).to.equal(3);
+  });
+
+  it('Should set time the cactus spent in sun', () => {
+    cactus.setTimeInSun(3);
+
+    expect(cactus.timeInSun).to.equal(3);
+  });
+
+  it('Should set the amount the cactus has been fertilized', () => {
+    cactus.setAmountFertilized(2);
+
+    expect(cactus.amountFertilized).to.equal(2);
+  });
+
+  it('Should set cactus to flowering', () => {
+    cactus.setFlowering();
+
+    expect(cactus.flowering).to.equal(true);
+  });
+
+  it('Should set cactus to sentient', () => {
+    cactus.setSentient();
+
+    expect(cactus.sentient).to.equal(true);
+  });
+
+  it('Should set cactus to spiky', () => {
+    cactus.setSpiky();
+
+    expect(cactus.spiky).to.equal(true);
+  });
+
+  it('Should set cactus to dead', () => {
+    cactus.setDead();
+
+    expect(cactus.dead).to.equal(true);
+  });
+
+  it('Should set cactus to having an owl', () => {
+    cactus.setOwl();
+
+    expect(cactus.owl).to.equal(true);
+  });
+
+  it('Should set cactus to fruiting', () => {
+    cactus.setFruiting();
+
+    expect(cactus.fruiting).to.equal(true);
+  });
+
+  it('Should set cactus age in weeks', () => {
+    cactus.setWeeksOld(3);
+
+    expect(cactus.weeksOld).to.equal(3);
+  });
 });
