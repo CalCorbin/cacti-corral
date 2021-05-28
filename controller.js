@@ -1,14 +1,7 @@
 const { Select } = require('enquirer');
 const text = require('./constants/gameMessages');
 const art = require('./constants/gameArt');
-
-function logGameMessage(string) {
-  // This function keeps console.log clutter out of mocha tests
-  if (process.env.NODE_ENV !== 'test') {
-    // eslint-disable-next-line no-console
-    console.log(string);
-  }
-}
+const { logGameMessage, isSentient } = require('./helper');
 
 function pourWater(cactus) {
   cactus.setAmountWatered(cactus.amountWatered + 1);
@@ -40,10 +33,6 @@ function createFloweringCactus(cactus) {
 
     logGameMessage(art.floweringCactus);
   }
-}
-
-function isSentient({ amountFertilized, timeInSun, amountWatered }) {
-  return amountFertilized >= 4 && timeInSun === 1 && amountWatered === 1;
 }
 
 function createSentientCactus(cactus) {
