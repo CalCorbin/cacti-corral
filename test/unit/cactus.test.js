@@ -73,4 +73,10 @@ describe('Test suite for the cactus', () => {
 
     expect(cactus.flowering).to.equal(true);
   });
+
+  it('Should set cactus to sentient', () => {
+    cactus.setSentient();
+
+    expect(cactus.sentient).to.equal(true);
+  });
 });

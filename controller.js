@@ -56,7 +56,7 @@ function isSentient({ amountFertilized, timeInSun, amountWatered }) {
 
 function createSentientCactus(cactus) {
   if (isSentient(cactus)) {
-    cactus.sentient = true;
+    cactus.setSentient();
 
     logGameMessage(`A combination of nutrients and sun produced something unexpected. It appears that your
     cactus is exhibiting intelligence and enjoys cowboy hats. Congratulations?`);

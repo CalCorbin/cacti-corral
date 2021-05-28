@@ -32,6 +32,10 @@ class Cactus {
   setFlowering() {
     this.flowering = true;
   }
+
+  setSentient() {
+    this.sentient = true;
+  }
 }
 
 module.exports = Cactus;
