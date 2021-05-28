@@ -67,4 +67,10 @@ describe('Test suite for the cactus', () => {
 
     expect(cactus.amountFertilized).to.equal(2);
   });
+
+  it('Should set cactus to flowering', () => {
+    cactus.setFlowering();
+
+    expect(cactus.flowering).to.equal(true);
+  });
 });

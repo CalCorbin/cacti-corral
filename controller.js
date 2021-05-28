@@ -41,7 +41,7 @@ function addFertilizer(cactus) {
 
 function createFloweringCactus(cactus) {
   if (cactus.amountWatered >= 5 && cactus.amountFertilized === 1) {
-    cactus.flowering = true;
+    cactus.setFlowering();
 
     logGameMessage(`Congratulations, you have a flowering cactus that is 
     ${cactus.height} inches tall!`);

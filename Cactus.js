@@ -28,6 +28,10 @@ class Cactus {
   setAmountFertilized(amountFertilized) {
     this.amountFertilized = amountFertilized;
   }
+
+  setFlowering() {
+    this.flowering = true;
+  }
 }
 
 module.exports = Cactus;
