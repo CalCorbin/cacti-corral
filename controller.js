@@ -10,14 +10,6 @@ function logGameMessage(string) {
   }
 }
 
-async function gameIntro(cactus) {
-  if (cactus.weeksOld > 1) {
-    return;
-  }
-  logGameMessage(art.welcomeCactus);
-  logGameMessage(text.introMessage);
-}
-
 function pourWater(cactus) {
   cactus.setAmountWatered(cactus.amountWatered + 1);
   cactus.setHeight(cactus.height + 0.5);
@@ -244,7 +236,8 @@ async function startRound(cactus) {
 }
 
 async function runGame(cactus) {
-  await gameIntro(cactus);
+  logGameMessage(art.welcomeCactus);
+  logGameMessage(text.introMessage);
 
   await startRound(cactus);
 }
