@@ -79,4 +79,34 @@ describe('Test suite for the cactus', () => {
 
     expect(cactus.sentient).to.equal(true);
   });
+
+  it('Should set cactus to spiky', () => {
+    cactus.setSpiky();
+
+    expect(cactus.spiky).to.equal(true);
+  });
+
+  it('Should set cactus to dead', () => {
+    cactus.setDead();
+
+    expect(cactus.dead).to.equal(true);
+  });
+
+  it('Should set cactus to having an owl', () => {
+    cactus.setOwl();
+
+    expect(cactus.owl).to.equal(true);
+  });
+
+  it('Should set cactus to fruiting', () => {
+    cactus.setFruiting();
+
+    expect(cactus.fruiting).to.equal(true);
+  });
+
+  it('Should set cactus age in weeks', () => {
+    cactus.setWeeksOld(3);
+
+    expect(cactus.weeksOld).to.equal(3);
+  });
 });

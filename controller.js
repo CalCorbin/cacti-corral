@@ -70,7 +70,7 @@ function isSpiky({ timeInSun, amountWatered }) {
 
 function createSpikyCactus(cactus) {
   if (isSpiky(cactus)) {
-    cactus.spiky = true;
+    cactus.setSpiky();
 
     logGameMessage(`You sure did give your cactus a lot of sun. It is ${cactus.height} inches tall and 
     look at all those sharp spikes!`);
@@ -103,7 +103,7 @@ function isDead({ amountWatered, dead }) {
 
 function createDeadCactus(cactus) {
   if (isDead(cactus)) {
-    cactus.dead = true;
+    cactus.setDead();
 
     logGameMessage('\nYour cactus died.');
     logGameMessage(art.cactusAngel);
@@ -113,22 +113,22 @@ function createDeadCactus(cactus) {
 function determineBottleEffect(diceRoll, cactus) {
   switch (diceRoll) {
     case 1:
-      cactus.height += 10;
+      cactus.setHeight(cactus.height + 10);
       logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
       break;
     case 2:
-      cactus.owl = true;
+      cactus.setOwl();
       logGameMessage(`\nLooks like the mystery bottle did not do anything, but an owl moved
       into your cactus!`);
       logGameMessage(art.owl);
       break;
     case 3:
-      cactus.fruiting = true;
+      cactus.setFruiting();
       logGameMessage('\nYour cactus looks to be bearing fruit!');
       logGameMessage(art.apple);
       break;
     default:
-      cactus.dead = true;
+      cactus.setDead();
       logGameMessage("\nYour cactus doesn't look too good..");
       break;
   }
@@ -157,7 +157,7 @@ async function useMysteriousBottle(cactus) {
 
 function calculateCactusResults(cactus) {
   // We use toFixed() to keep the cactus height decimal from getting too long.
-  cactus.height = cactus.height.toFixed(1);
+  cactus.setHeight(cactus.height.toFixed(1));
 
   logGameMessage(art.endGameBorder);
 
@@ -235,7 +235,8 @@ async function startRound(cactus) {
   logGameMessage(art.endRoundBorder);
 
   if (cactus.weeksOld < 3) {
-    cactus.weeksOld += 1;
+    cactus.setWeeksOld(cactus.weeksOld + 1);
+
     await startRound(cactus);
   } else {
     endGame(cactus);
