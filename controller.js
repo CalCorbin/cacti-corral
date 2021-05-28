@@ -28,12 +28,14 @@ function pourWater(cactus) {
 function turnOnSunLamp(cactus) {
   cactus.setTimeInSun(cactus.timeInSun + 1);
   cactus.setHeight(cactus.height + 0.3);
+
   logGameMessage('\nThe cactus warms up in the sun lamp.');
 }
 
 function addFertilizer(cactus) {
-  cactus.amountFertilized += 1;
-  cactus.height += 0.7;
+  cactus.setAmountFertilized(cactus.amountFertilized + 1);
+  cactus.setHeight(cactus.height + 0.7);
+
   logGameMessage('\nThe cactus accepts the fertilizer.');
 }
 

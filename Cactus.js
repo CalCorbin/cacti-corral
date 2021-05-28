@@ -13,8 +13,8 @@ class Cactus {
     this.fruiting = false;
   }
 
-  setAmountWatered(amount) {
-    this.amountWatered = amount;
+  setAmountWatered(amountWatered) {
+    this.amountWatered = amountWatered;
   }
 
   setHeight(height) {
@@ -23,6 +23,10 @@ class Cactus {
 
   setTimeInSun(timeInSun) {
     this.timeInSun = timeInSun;
+  }
+
+  setAmountFertilized(amountFertilized) {
+    this.amountFertilized = amountFertilized;
   }
 }
 

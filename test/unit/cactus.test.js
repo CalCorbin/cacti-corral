@@ -59,6 +59,12 @@ describe('Test suite for the cactus', () => {
   it('Should set time the cactus spent in sun', () => {
     cactus.setTimeInSun(3);
 
-    expect(cactus.height).to.equal(3);
+    expect(cactus.timeInSun).to.equal(3);
+  });
+
+  it('Should set the amount the cactus has been fertilized', () => {
+    cactus.setAmountFertilized(2);
+
+    expect(cactus.amountFertilized).to.equal(2);
   });
 });
