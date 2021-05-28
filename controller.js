@@ -26,8 +26,8 @@ function pourWater(cactus) {
 }
 
 function turnOnSunLamp(cactus) {
-  cactus.timeInSun += 1;
-  cactus.height += 0.3;
+  cactus.setTimeInSun(cactus.timeInSun + 1);
+  cactus.setHeight(cactus.height + 0.3);
   logGameMessage('\nThe cactus warms up in the sun lamp.');
 }
 

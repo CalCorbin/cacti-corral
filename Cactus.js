@@ -20,6 +20,10 @@ class Cactus {
   setHeight(height) {
     this.height = height;
   }
+
+  setTimeInSun(timeInSun) {
+    this.timeInSun = timeInSun;
+  }
 }
 
 module.exports = Cactus;
