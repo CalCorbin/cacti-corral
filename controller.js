@@ -1,7 +1,9 @@
 const { Select } = require('enquirer');
 const text = require('./constants/gameMessages');
 const art = require('./constants/gameArt');
-const { logGameMessage, isSentient, diceRoll } = require('./helper');
+const {
+  logGameMessage, isSentient, diceRoll, isNormal, isSpiky, isDead,
+} = require('./helper');
 
 function pourWater(cactus) {
   cactus.setAmountWatered(cactus.amountWatered + 1);
@@ -45,10 +47,6 @@ function createSentientCactus(cactus) {
   }
 }
 
-function isSpiky({ timeInSun, amountWatered }) {
-  return timeInSun === 5 && amountWatered === 1;
-}
-
 function createSpikyCactus(cactus) {
   if (isSpiky(cactus)) {
     cactus.setSpiky();
@@ -59,27 +57,11 @@ function createSpikyCactus(cactus) {
   }
 }
 
-function isNormal({
-  amountWatered,
-  flowering,
-  sentient,
-  spiky,
-}) {
-  return amountWatered >= 1
-    && !flowering
-    && !sentient
-    && !spiky;
-}
-
 function createNormalCactus(cactus) {
   if (isNormal(cactus)) {
     logGameMessage(`Your cactus is ${cactus.height} inches tall.`);
     logGameMessage(art.normalCactus);
   }
-}
-
-function isDead({ amountWatered, dead }) {
-  return amountWatered < 1 || dead;
 }
 
 function createDeadCactus(cactus) {
@@ -294,8 +276,5 @@ module.exports = {
   createSpikyCactus,
   createDeadCactus,
   determineBottleEffect,
-  isNormal,
-  isSpiky,
-  isDead,
   getHurricane,
 };

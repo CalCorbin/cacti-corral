@@ -1,9 +1,9 @@
-process.env.NODE_ENV = 'test';
-
 const { expect } = require('chai');
-const { diceRoll, isSentient } = require('../../helper');
+const {
+  diceRoll, isSentient, isNormal, isSpiky, isDead,
+} = require('../../helper');
 
-describe('Test suite for controller functions', () => {
+describe('Test suite for helper functions', () => {
   let testCactus;
 
   beforeEach(() => { testCactus = {}; });
@@ -26,5 +26,51 @@ describe('Test suite for controller functions', () => {
     const sentient = await isSentient(testCactus);
 
     expect(sentient).to.equal(false);
+  });
+
+  it('Should verify cactus is normal', async () => {
+    testCactus.amountWatered = 2;
+
+    const normal = await isNormal(testCactus);
+
+    expect(normal).to.equal(true);
+  });
+
+  it('Should verify cactus is not normal', async () => {
+    const normal = await isNormal(testCactus);
+
+    expect(normal).to.equal(false);
+  });
+
+  it('Should verify cactus is spiky', async () => {
+    testCactus.timeInSun = 5;
+    testCactus.amountWatered = 1;
+
+    const spiky = await isSpiky(testCactus);
+
+    expect(spiky).to.equal(true);
+  });
+
+  it('Should verify cactus is not spiky', async () => {
+    const spiky = await isSpiky(testCactus);
+
+    expect(spiky).to.equal(false);
+  });
+
+  it('Should verify cactus is dead', async () => {
+    testCactus.amountWatered = 0;
+
+    const dead = await isDead(testCactus);
+
+    expect(dead).to.equal(true);
+  });
+
+  it('Should verify cactus is not dead', async () => {
+    testCactus.amountWatered = 2;
+    testCactus.dead = false;
+
+    const dead = await isDead(testCactus);
+
+    expect(dead).to.equal(false);
   });
 });
