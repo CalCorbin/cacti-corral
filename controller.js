@@ -199,14 +199,70 @@ async function spendRoundActions(cactus) {
 }
 
 async function endGame(cactus) {
-  await useMysteriousBottle(cactus);
   calculateCactusResults(cactus);
   logGameMessage('\nThanks for playing! Yall come back to the Cacti Corral now, ya hear!\n');
   process.exit();
 }
 
+async function determineHurricaneResult(hurricaneEffect, cactus) {
+  const findCactus = new Select({
+    name: 'selectAction',
+    message: '\nOh no your cactus blew away! Do you want to try to find it?',
+    choices: ['Yes', 'No'],
+  });
+
+  switch (hurricaneEffect) {
+    case 1:
+      logGameMessage('It looks like the hurricane knocked off the top of your cactus');
+      if (cactus.height === 1) {
+        cactus.setDead();
+        logGameMessage('When the hurricane took off the top of your cactus, that was all there was. It is dead.');
+        endGame(cactus);
+      } else {
+        cactus.setHeight(cactus.height - 1);
+      }
+      break;
+    case 2:
+      await findCactus.run().then((answer) => {
+        if (answer === 'Yes') {
+          const fiftyFifty = Math.ceil(Math.random() * 2);
+
+          if (fiftyFifty === 1) {
+            cactus.setDead();
+            logGameMessage('You have no idea where your poor cactus is');
+            endGame(cactus);
+          } else {
+            logGameMessage('YEEHAW! You found your cactus and it somehow is perfectly fine!');
+          }
+        }
+      });
+      break;
+    default:
+      logGameMessage('HOORAY! Your cactus weathered the storm.');
+      break;
+  }
+}
+
+async function getHurricane(diceRoll, cactus) {
+  const hurricaneEffect = Math.ceil(Math.random() * 3);
+
+  // There is a 1 in 3 chance of generating a hurricane each turn.
+  switch (diceRoll) {
+    case 1:
+      logGameMessage('A hurricane has struck your cactus!');
+      await determineHurricaneResult(hurricaneEffect, cactus);
+      break;
+    default:
+      // Nothing happens
+      break;
+  }
+}
+
 async function startRound(cactus) {
   logGameMessage(`\n======Starting week ${cactus.weeksOld}======\n`);
+
+  const diceRoll = Math.ceil(Math.random() * 3);
+  await getHurricane(diceRoll, cactus);
 
   await spendRoundActions(cactus);
 
@@ -220,6 +276,7 @@ async function startRound(cactus) {
 
     await startRound(cactus);
   } else {
+    await useMysteriousBottle(cactus);
     endGame(cactus);
   }
 }
@@ -242,8 +299,8 @@ module.exports = {
   createSpikyCactus,
   createDeadCactus,
   determineBottleEffect,
-  isSentient,
   isNormal,
   isSpiky,
   isDead,
+  getHurricane,
 };

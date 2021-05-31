@@ -1,6 +1,7 @@
 process.env.NODE_ENV = 'test';
 
 const { expect } = require('chai');
+const sinon = require('sinon');
 const Cactus = require('../../Cactus');
 const controller = require('../../controller');
 
@@ -121,22 +122,6 @@ describe('Test suite for controller functions', () => {
     expect(cactus.dead).to.equal(true);
   });
 
-  it('Should verify cactus is sentient', async () => {
-    cactus.amountFertilized = 4;
-    cactus.timeInSun = 1;
-    cactus.amountWatered = 1;
-
-    const sentient = await controller.isSentient(cactus);
-
-    expect(sentient).to.equal(true);
-  });
-
-  it('Should verify cactus is not sentient', async () => {
-    const sentient = await controller.isSentient(cactus);
-
-    expect(sentient).to.equal(false);
-  });
-
   it('Should verify cactus is normal', async () => {
     cactus.amountWatered = 2;
 
@@ -180,5 +165,11 @@ describe('Test suite for controller functions', () => {
     const dead = await controller.isDead(cactus);
 
     expect(dead).to.equal(false);
+  });
+
+  it('WIP', async () => {
+    const foobar = sinon.spy();
+
+    await controller.getHurricane(4, foobar).should.have.been.calledWith(4);
   });
 });
