@@ -91,8 +91,8 @@ function createDeadCactus(cactus) {
   }
 }
 
-function determineBottleEffect(diceRoll, cactus) {
-  switch (diceRoll) {
+function determineBottleEffect(diceRollResult, cactus) {
+  switch (diceRollResult) {
     case 1:
       cactus.setHeight(cactus.height + 10);
       logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
@@ -227,16 +227,16 @@ async function determineHurricaneResult(hurricaneEffect, cactus) {
 
           if (fiftyFifty === 1) {
             cactus.setDead();
-            logGameMessage('You have no idea where your poor cactus is');
+            logGameMessage('\nYou have no idea where your poor cactus is. :(');
             endGame(cactus);
           } else {
-            logGameMessage('YEEHAW! You found your cactus and it somehow is perfectly fine!');
+            logGameMessage('\nYEEHAW! You found your cactus and it somehow is perfectly fine!');
           }
         }
       });
       break;
     default:
-      logGameMessage('HOORAY! Your cactus weathered the storm.');
+      logGameMessage('\nHOORAY! Your cactus weathered the storm.');
       break;
   }
 }

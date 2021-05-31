@@ -166,10 +166,4 @@ describe('Test suite for controller functions', () => {
 
     expect(dead).to.equal(false);
   });
-
-  it('WIP', async () => {
-    const foobar = sinon.spy();
-
-    await controller.getHurricane(4, foobar).should.have.been.calledWith(4);
-  });
 });

@@ -19,8 +19,7 @@
   },
   "homepage": "https://github.com/CalCorbin/cacti-corral#readme",
   "dependencies": {
-    "enquirer": "^2.3.6",
-    "sinon": "^11.1.1"
+    "enquirer": "^2.3.6"
   },
   "devDependencies": {
     "chai": "^4.3.4",
