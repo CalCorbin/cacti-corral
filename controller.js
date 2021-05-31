@@ -1,7 +1,7 @@
 const { Select } = require('enquirer');
 const text = require('./constants/gameMessages');
 const art = require('./constants/gameArt');
-const { logGameMessage, isSentient } = require('./helper');
+const { logGameMessage, isSentient, diceRoll } = require('./helper');
 
 function pourWater(cactus) {
   cactus.setAmountWatered(cactus.amountWatered + 1);
@@ -129,9 +129,7 @@ async function useMysteriousBottle(cactus) {
   await action.run()
     .then(async (answer) => {
       if (answer === 'Yes') {
-        const diceRoll = Math.ceil(Math.random() * 6);
-
-        determineBottleEffect(diceRoll, cactus);
+        determineBottleEffect(diceRoll(6), cactus);
       }
     });
 }
@@ -225,7 +223,7 @@ async function determineHurricaneResult(hurricaneEffect, cactus) {
     case 2:
       await findCactus.run().then((answer) => {
         if (answer === 'Yes') {
-          const fiftyFifty = Math.ceil(Math.random() * 2);
+          const fiftyFifty = diceRoll(2);
 
           if (fiftyFifty === 1) {
             cactus.setDead();
@@ -243,14 +241,12 @@ async function determineHurricaneResult(hurricaneEffect, cactus) {
   }
 }
 
-async function getHurricane(diceRoll, cactus) {
-  const hurricaneEffect = Math.ceil(Math.random() * 3);
-
+async function getHurricane(diceRollResult, cactus) {
   // There is a 1 in 3 chance of generating a hurricane each turn.
-  switch (diceRoll) {
+  switch (diceRollResult) {
     case 1:
       logGameMessage('A hurricane has struck your cactus!');
-      await determineHurricaneResult(hurricaneEffect, cactus);
+      await determineHurricaneResult(diceRoll(3), cactus);
       break;
     default:
       // Nothing happens
@@ -261,8 +257,7 @@ async function getHurricane(diceRoll, cactus) {
 async function startRound(cactus) {
   logGameMessage(`\n======Starting week ${cactus.weeksOld}======\n`);
 
-  const diceRoll = Math.ceil(Math.random() * 3);
-  await getHurricane(diceRoll, cactus);
+  await getHurricane(diceRoll(3), cactus);
 
   await spendRoundActions(cactus);
 
