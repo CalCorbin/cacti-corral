@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint:js": "./node_modules/.bin/eslint test/ *.js",
-    "test": "mocha test/**/*.test.js",
+    "test": "NODE_ENV=test mocha test/**/*.test.js",
     "cacti": "node index.js"
   },
   "repository": {

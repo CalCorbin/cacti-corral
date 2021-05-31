@@ -1,5 +1,3 @@
-process.env.NODE_ENV = 'test';
-
 const { expect } = require('chai');
 const Cactus = require('../../Cactus');
 const controller = require('../../controller');
@@ -119,66 +117,5 @@ describe('Test suite for controller functions', () => {
     await controller.determineBottleEffect(6, cactus);
 
     expect(cactus.dead).to.equal(true);
-  });
-
-  it('Should verify cactus is sentient', async () => {
-    cactus.amountFertilized = 4;
-    cactus.timeInSun = 1;
-    cactus.amountWatered = 1;
-
-    const sentient = await controller.isSentient(cactus);
-
-    expect(sentient).to.equal(true);
-  });
-
-  it('Should verify cactus is not sentient', async () => {
-    const sentient = await controller.isSentient(cactus);
-
-    expect(sentient).to.equal(false);
-  });
-
-  it('Should verify cactus is normal', async () => {
-    cactus.amountWatered = 2;
-
-    const normal = await controller.isNormal(cactus);
-
-    expect(normal).to.equal(true);
-  });
-
-  it('Should verify cactus is not normal', async () => {
-    const normal = await controller.isNormal(cactus);
-
-    expect(normal).to.equal(false);
-  });
-
-  it('Should verify cactus is spiky', async () => {
-    cactus.timeInSun = 5;
-    cactus.amountWatered = 1;
-
-    const spiky = await controller.isSpiky(cactus);
-
-    expect(spiky).to.equal(true);
-  });
-
-  it('Should verify cactus is not spiky', async () => {
-    const spiky = await controller.isSpiky(cactus);
-
-    expect(spiky).to.equal(false);
-  });
-
-  it('Should verify cactus is dead', async () => {
-    cactus.amountWatered = 0;
-
-    const dead = await controller.isDead(cactus);
-
-    expect(dead).to.equal(true);
-  });
-
-  it('Should verify cactus is not dead', async () => {
-    cactus.amountWatered = 1;
-
-    const dead = await controller.isDead(cactus);
-
-    expect(dead).to.equal(false);
   });
 });

@@ -1,22 +1,9 @@
 const { Select } = require('enquirer');
 const text = require('./constants/gameMessages');
 const art = require('./constants/gameArt');
-
-function logGameMessage(string) {
-  // This function keeps console.log clutter out of mocha tests
-  if (process.env.NODE_ENV !== 'test') {
-    // eslint-disable-next-line no-console
-    console.log(string);
-  }
-}
-
-async function gameIntro(cactus) {
-  if (cactus.weeksOld > 1) {
-    return;
-  }
-  logGameMessage(art.welcomeCactus);
-  logGameMessage(text.introMessage);
-}
+const {
+  logGameMessage, isSentient, diceRoll, isNormal, isSpiky, isDead,
+} = require('./helper');
 
 function pourWater(cactus) {
   cactus.setAmountWatered(cactus.amountWatered + 1);
@@ -50,10 +37,6 @@ function createFloweringCactus(cactus) {
   }
 }
 
-function isSentient({ amountFertilized, timeInSun, amountWatered }) {
-  return amountFertilized >= 4 && timeInSun === 1 && amountWatered === 1;
-}
-
 function createSentientCactus(cactus) {
   if (isSentient(cactus)) {
     cactus.setSentient();
@@ -62,10 +45,6 @@ function createSentientCactus(cactus) {
     cactus is exhibiting intelligence and enjoys cowboy hats. Congratulations?`);
     logGameMessage(art.sentientCactus);
   }
-}
-
-function isSpiky({ timeInSun, amountWatered }) {
-  return timeInSun === 5 && amountWatered === 1;
 }
 
 function createSpikyCactus(cactus) {
@@ -78,27 +57,11 @@ function createSpikyCactus(cactus) {
   }
 }
 
-function isNormal({
-  amountWatered,
-  flowering,
-  sentient,
-  spiky,
-}) {
-  return amountWatered >= 1
-    && !flowering
-    && !sentient
-    && !spiky;
-}
-
 function createNormalCactus(cactus) {
   if (isNormal(cactus)) {
     logGameMessage(`Your cactus is ${cactus.height} inches tall.`);
     logGameMessage(art.normalCactus);
   }
-}
-
-function isDead({ amountWatered, dead }) {
-  return amountWatered < 1 || dead;
 }
 
 function createDeadCactus(cactus) {
@@ -110,8 +73,8 @@ function createDeadCactus(cactus) {
   }
 }
 
-function determineBottleEffect(diceRoll, cactus) {
-  switch (diceRoll) {
+function determineBottleEffect(diceRollResult, cactus) {
+  switch (diceRollResult) {
     case 1:
       cactus.setHeight(cactus.height + 10);
       logGameMessage('\nYour cactus grew 10 inches taller in a matter of seconds!');
@@ -148,9 +111,7 @@ async function useMysteriousBottle(cactus) {
   await action.run()
     .then(async (answer) => {
       if (answer === 'Yes') {
-        const diceRoll = Math.ceil(Math.random() * 6);
-
-        determineBottleEffect(diceRoll, cactus);
+        determineBottleEffect(diceRoll(6), cactus);
       }
     });
 }
@@ -218,14 +179,67 @@ async function spendRoundActions(cactus) {
 }
 
 async function endGame(cactus) {
-  await useMysteriousBottle(cactus);
   calculateCactusResults(cactus);
   logGameMessage('\nThanks for playing! Yall come back to the Cacti Corral now, ya hear!\n');
   process.exit();
 }
 
+async function determineHurricaneResult(hurricaneEffect, cactus) {
+  const findCactus = new Select({
+    name: 'selectAction',
+    message: '\nOh no your cactus blew away! Do you want to try to find it?',
+    choices: ['Yes', 'No'],
+  });
+
+  switch (hurricaneEffect) {
+    case 1:
+      logGameMessage('It looks like the hurricane knocked off the top of your cactus');
+      if (cactus.height === 1) {
+        cactus.setDead();
+        logGameMessage('When the hurricane took off the top of your cactus, that was all there was. It is dead.');
+        endGame(cactus);
+      } else {
+        cactus.setHeight(cactus.height - 1);
+      }
+      break;
+    case 2:
+      await findCactus.run().then((answer) => {
+        if (answer === 'Yes') {
+          const fiftyFifty = diceRoll(2);
+
+          if (fiftyFifty === 1) {
+            cactus.setDead();
+            logGameMessage('\nYou have no idea where your poor cactus is. :(');
+            endGame(cactus);
+          } else {
+            logGameMessage('\nYEEHAW! You found your cactus and it somehow is perfectly fine!');
+          }
+        }
+      });
+      break;
+    default:
+      logGameMessage('\nHOORAY! Your cactus weathered the storm.');
+      break;
+  }
+}
+
+async function getHurricane(diceRollResult, cactus) {
+  // There is a 1 in 3 chance of generating a hurricane each turn.
+  switch (diceRollResult) {
+    case 1:
+      logGameMessage('A hurricane has struck your cactus!');
+      await determineHurricaneResult(diceRoll(3), cactus);
+      break;
+    default:
+      // Nothing happens
+      break;
+  }
+}
+
 async function startRound(cactus) {
   logGameMessage(`\n======Starting week ${cactus.weeksOld}======\n`);
+
+  await getHurricane(diceRoll(3), cactus);
 
   await spendRoundActions(cactus);
 
@@ -239,12 +253,14 @@ async function startRound(cactus) {
 
     await startRound(cactus);
   } else {
+    await useMysteriousBottle(cactus);
     endGame(cactus);
   }
 }
 
 async function runGame(cactus) {
-  await gameIntro(cactus);
+  logGameMessage(art.welcomeCactus);
+  logGameMessage(text.introMessage);
 
   await startRound(cactus);
 }
@@ -260,8 +276,5 @@ module.exports = {
   createSpikyCactus,
   createDeadCactus,
   determineBottleEffect,
-  isSentient,
-  isNormal,
-  isSpiky,
-  isDead,
+  getHurricane,
 };
