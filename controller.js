@@ -243,25 +243,19 @@ async function getHurricane(diceRollResult, cactus) {
   }
 }
 
-function updateBoonValues(cactus, diceRollResult) {
-  if (diceRollResult === 1) {
-    cactus.setAmountWatered(cactus.amountWatered * 3);
-    cactus.setAmountFertilized(cactus.amountFertilized * 3);
-    cactus.setTimeInSun(cactus.timeInSun * 3);
-  } else {
-    cactus.setHeight(cactus.height + 10);
-  }
-}
-
 async function determineWizardBoon(diceRollResult, cactus) {
   switch (diceRollResult) {
     case 1:
       logGameMessage('I grant you the boon of multiplicity, may your cactus always enjoy a bounty');
-      updateBoonValues(cactus, diceRollResult);
+      cactus.updateProps({
+        amountWatered: cactus.amountWatered * 3,
+        amountFertilized: cactus.amountFertilized * 3,
+        timeInSun: cactus.timeInSun * 3,
+      });
       break;
     default:
       logGameMessage('I the wizard, grant your cactus height beyond height, may it ever serve you');
-      updateBoonValues(cactus, diceRollResult);
+      cactus.updateProps({ height: cactus.height + 10 });
       break;
   }
 }
