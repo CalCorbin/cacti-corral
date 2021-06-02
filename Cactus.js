@@ -18,7 +18,8 @@ class Cactus {
     // from the user input.
     Object.keys(updateData).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(this, key)) {
-        this[key] = updateData[key];
+        const property = { [key]: updateData[key] };
+        Object.assign(this, property);
       }
     });
   }
