@@ -13,6 +13,16 @@ class Cactus {
     this.fruiting = false;
   }
 
+  updateProps(updateData) {
+    // Here we want to update the cactus property with the data received
+    // from the user input.
+    Object.keys(updateData).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(this, key)) {
+        this[key] = updateData[key];
+      }
+    });
+  }
+
   setWeeksOld(weeksOld) {
     this.weeksOld = weeksOld;
   }

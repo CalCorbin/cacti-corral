@@ -6,8 +6,12 @@ const {
 } = require('./helper');
 
 function pourWater(cactus) {
-  cactus.setAmountWatered(cactus.amountWatered + 1);
-  cactus.setHeight(cactus.height + 0.5);
+  cactus.updateProps(
+    {
+      amountWatered: cactus.amountWatered + 1,
+      height: cactus.height + 0.5,
+    },
+  );
 
   logGameMessage('\nThe cactus was watered.');
 }
@@ -214,6 +218,9 @@ async function determineHurricaneResult(hurricaneEffect, cactus) {
           } else {
             logGameMessage('\nYEEHAW! You found your cactus and it somehow is perfectly fine!');
           }
+        } else {
+          logGameMessage('\nSometimes it really is best to just move on.');
+          endGame(cactus);
         }
       });
       break;
@@ -236,8 +243,45 @@ async function getHurricane(diceRollResult, cactus) {
   }
 }
 
+function updateBoonValues(cactus, diceRollResult) {
+  if (diceRollResult === 1) {
+    cactus.setAmountWatered(cactus.amountWatered * 3);
+    cactus.setAmountFertilized(cactus.amountFertilized * 3);
+    cactus.setTimeInSun(cactus.timeInSun * 3);
+  } else {
+    cactus.setHeight(cactus.height + 10);
+  }
+}
+
+async function determineWizardBoon(diceRollResult, cactus) {
+  switch (diceRollResult) {
+    case 1:
+      logGameMessage('I grant you the boon of multiplicity, may your cactus always enjoy a bounty');
+      updateBoonValues(cactus, diceRollResult);
+      break;
+    default:
+      logGameMessage('I the wizard, grant your cactus height beyond height, may it ever serve you');
+      updateBoonValues(cactus, diceRollResult);
+      break;
+  }
+}
+
+async function getWizard(diceRollResult, cactus) {
+  switch (diceRollResult) {
+    case 1:
+      logGameMessage('The wizard has arrived to bestow a boon upon your cactus');
+      logGameMessage(art.cactusWizard);
+      await determineWizardBoon(diceRoll(4), cactus);
+      break;
+    default:
+      // No wizard is summoned
+      break;
+  }
+}
+
 async function startRound(cactus) {
   logGameMessage(`\n======Starting week ${cactus.weeksOld}======\n`);
+  await getWizard(diceRoll(10), cactus);
 
   await getHurricane(diceRoll(3), cactus);
 
